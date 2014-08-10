@@ -18,5 +18,4 @@ describe "Board" do
     expect(test_board.space(1).marked).to eq :x
   end
 
-
 end

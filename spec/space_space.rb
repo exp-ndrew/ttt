@@ -7,6 +7,5 @@ describe "Space" do
     expect(space1.marked).to eq nil
     expect(space1.space_number).to eq 1
   end
-end
-  
+
 end

@@ -9,7 +9,6 @@ class Board
     (1..9).each { |i| spaces << Space.new(i) }
   end
 
-
   def space space_number
     @spaces[space_number]
   end 

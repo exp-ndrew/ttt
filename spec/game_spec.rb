@@ -9,4 +9,5 @@ describe "Game" do
     expect(new_game.playerx).to be_an_instance_of Player
     expect(new_game.playero).to be_an_instance_of Player
   end
+  
 end
