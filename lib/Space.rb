@@ -4,11 +4,11 @@ class Space
 
   def initialize space_number
     @space_number = space_number
-    @marked = nil
+    @marked = " "
   end
 
   def mark player_symbol
-    @marked == nil ? @marked = player_symbol : @marked
+    @marked == " " ? @marked = player_symbol : @marked
   end
 
   def marked

@@ -14,10 +14,13 @@ def new_game
 
   loop do
     show_game_board
+    check_if_game_over
+    @game_over == true ? break : 
     show_menu
     input = gets.chomp
     if input.match(/\b\d\b/) == nil
       puts "That's not a valid input!"
+      sleep (1)
     else
       make_move(input)
     end
@@ -32,8 +35,23 @@ end
 
 def show_game_board
   system('clear')
-  puts "the board will render here"
+  puts " #{@game.board.space(1).marked} | #{@game.board.space(2).marked} | #{@game.board.space(3).marked} "
+  puts " 1 | 2 | 3 "
+  puts "---+---+---"
+  puts " #{@game.board.space(4).marked} | #{@game.board.space(5).marked} | #{@game.board.space(6).marked} "
+  puts " 4 | 5 | 6 "
+  puts "---+---+---"
+  puts " #{@game.board.space(7).marked} | #{@game.board.space(8).marked} | #{@game.board.space(9).marked} "
+  puts " 7 | 8 | 9 "
   puts "\n\n"
+
+
+  #    |   |   
+  # ---+---+---
+  #    |   |   
+  # ---+---+---
+  #    |   |  
+
 end
 
 
@@ -45,14 +63,13 @@ end
 
 def make_move i
 
-  if @game.board.space(i.to_i).marked == nil 
+  if @game.board.space(i.to_i).marked == " " 
     @game.board.space(i.to_i).mark(@current_turn)
     toggle_current_turn
   else
     puts "That space is already marked. Choose another!"
+    sleep (1)
   end
-
-  check_if_game_over
 
 end
 
