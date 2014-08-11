@@ -1,3 +1,5 @@
+# quick input for cat's game : 1 5 2 4 6 9 7 3 8
+
 require './lib/Board.rb'
 require './lib/Game.rb'
 require './lib/Player.rb'
@@ -15,17 +17,15 @@ def new_game
   loop do
     show_game_board
     check_if_game_over
-    @game_over == true ? break : 
-    show_menu
+    @game_over == true ? break : # if game not over, carry on
+    ask_player_what_space
     input = gets.chomp
-    if input.match(/\b\d\b/) == nil
+    if input.match(/\b\d\b/) == nil || input.match(/0/)
       puts "That's not a valid input!"
       sleep (1)
     else
       make_move(input)
     end
-    @game_over == true ? break : redo
-
   end
 
   play_again
@@ -44,38 +44,10 @@ def show_game_board
   puts " #{@game.board.space(7).marked} | #{@game.board.space(8).marked} | #{@game.board.space(9).marked} "
   puts " 7 | 8 | 9 "
   puts "\n\n"
-
-
-  #    |   |   
-  # ---+---+---
-  #    |   |   
-  # ---+---+---
-  #    |   |  
-
-end
-
-
-def show_menu
-  puts "Player #{@current_turn}, it's your turn!"
-  puts "Enter the space number you wish to mark:"
-end
-
-
-def make_move i
-
-  if @game.board.space(i.to_i).marked == " " 
-    @game.board.space(i.to_i).mark(@current_turn)
-    toggle_current_turn
-  else
-    puts "That space is already marked. Choose another!"
-    sleep (1)
-  end
-
 end
 
 
 def check_if_game_over
-
   case @game.check_if_game_over
   when :x
     puts "x player wins!"
@@ -89,7 +61,23 @@ def check_if_game_over
   else
     @game_over = false
   end
+end
 
+
+def ask_player_what_space
+  puts "Player #{@current_turn}, it's your turn!"
+  puts "Enter the space number you wish to mark:"
+end
+
+
+def make_move i
+  if @game.board.space(i.to_i).marked == " " 
+    @game.board.space(i.to_i).mark(@current_turn)
+    toggle_current_turn
+  else
+    puts "That space is already marked. Choose another!"
+    sleep (1)
+  end
 end
 
 
@@ -103,12 +91,11 @@ def play_again
   puts "Enter 'x' to quit"
   input = gets.chomp
   case input
-    when 'x'
-      exit
-    else 
-      new_game
-    end
-
+  when 'x'
+    exit
+  else 
+    new_game
+  end
 end
 
 new_game
