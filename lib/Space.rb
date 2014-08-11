@@ -8,7 +8,11 @@ class Space
   end
 
   def mark player_symbol
-    @marked = player_symbol
+    @marked == nil ? @marked = player_symbol : @marked
+  end
+
+  def marked
+    @marked
   end
 
 end

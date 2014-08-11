@@ -10,13 +10,19 @@ require 'pry'
 
 def new_game
 
+  @game = Game.new
+
   loop do
     show_game_board
     show_menu
     input = gets.chomp
-    make_move(input)
-    check_if_game_over
+    if input.match(/\b\d\b/) == nil
+      puts "That's not a valid input!"
+    else
+      make_move(input)
+    end
     @game_over == true ? break : redo
+
   end
 
   play_again
@@ -37,24 +43,35 @@ def show_menu
 end
 
 
-def make_move input
+def make_move i
 
-  puts "in the make_move method"
-  puts "the current turn is #{@current_turn}"
-  toggle_current_turn
-  puts "now the current turn is #{@current_turn}"
+  if @game.board.space(i.to_i).marked == nil 
+    @game.board.space(i.to_i).mark(@current_turn)
+    toggle_current_turn
+  else
+    puts "That space is already marked. Choose another!"
+  end
+
+  check_if_game_over
 
 end
 
 
 def check_if_game_over
 
-  puts "now we will check to see if the game is over"
-  puts "looks like the game is over"
-
-  @game_over = true
-
-  sleep (1)
+  case @game.check_if_game_over
+  when :x
+    puts "x player wins!"
+    @game_over = true
+  when :o
+    puts "o player wins!"
+    @game_over = true
+  when :c
+    puts "cat's game!"
+    @game_over = true
+  else
+    @game_over = false
+  end
 
 end
 
@@ -65,9 +82,16 @@ end
 
 
 def play_again
-  puts "Press any key to play again"
-  gets
-  new_game
+  puts "Enter any key to play again"
+  puts "Enter 'x' to quit"
+  input = gets.chomp
+  case input
+    when 'x'
+      exit
+    else 
+      new_game
+    end
+
 end
 
 new_game
